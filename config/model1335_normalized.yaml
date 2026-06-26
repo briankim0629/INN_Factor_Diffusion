@@ -1,0 +1,43 @@
+interp_method: "nonlinear"
+# interp_method: "gaussian"
+TD_type: "Tucker"
+
+MODEL_PARAM:
+
+  ## Tucker Nonlinear (RKPM) INN
+  # Tucker ranks for [x_mid, y_mid, t].
+  # The Tucker core shape is R_x x R_y x R_t.
+  tucker_rank : [40, 40, 40]
+  core_init_noise : 1e-2
+  nelem : 100
+
+  ## RKPM nonlinear interpolation
+  s_patch : 2          # neighborhood size (rings of elements per patch)
+  p_order : 1          # polynomial order: 1=linear (stable), 2=quadratic (more expressive)
+  alpha_dil : 2.5      # support radius = alpha_dil * element_size
+  radial_basis : "cubicSpline"
+  INNactivation : "polynomial"
+
+  ## INN gaussian (commented out)
+  # sigma_factor : 1.2
+
+DATA_PARAM:
+  # model1335_normalized.csv columns: x_mid, y_mid, t, damage
+  input_col : [0,1,2]
+  output_col : [3]
+  bool_normalize: True
+  bool_random_split : True
+  data_size: 1206169
+  split_ratio: [0.8,0.2]
+
+TRAIN_PARAM:
+  num_epochs_INN : 50
+  batch_size : 512
+  learning_rate : 1e-3
+  bool_train_acc : True
+  validation_period : 1
+
+PLOT:
+  bool_plot: False
+  plot_in_axis: [0,1,2]
+  plot_out_axis: [0]

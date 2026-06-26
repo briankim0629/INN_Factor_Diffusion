@@ -1,0 +1,35 @@
+interp_method: "gaussian2"
+TD_type: "Tucker"
+
+MODEL_PARAM:
+  tucker_rank : [80, 80, 40] 
+  core_init_noise : 1e-2
+  nelem : 200             
+
+  s_patch : 2
+  p_order : 1
+  alpha_dil : 2.5
+  radial_basis : "cubicSpline"
+  INNactivation : "polynomial"
+
+  sigma_factor : 0.5     
+
+DATA_PARAM:
+
+  input_col : [0,1,2]
+  output_col : [3]
+  bool_normalize: True
+  bool_random_split : True
+  split_ratio: [0.8,0.2]
+
+TRAIN_PARAM:
+  num_epochs_INN : 140
+  batch_size : 512
+  learning_rate : 5e-4  
+  bool_train_acc : True
+  validation_period : 10
+
+PLOT:
+  bool_plot: False
+  plot_in_axis: [0,1,2]
+  plot_out_axis: [0]
